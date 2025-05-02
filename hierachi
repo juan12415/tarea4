@@ -5,17 +5,15 @@ from sklearn.preprocessing import StandardScaler
 import scipy.cluster.hierarchy as sch
 from sklearn.cluster import AgglomerativeClustering
 
-# Paso 2: Cargar el dataset
+
 df = pd.read_csv('Mall_Customers.csv')
 
-# Paso 3: Seleccionar las columnas relevantes
+
 X = df[["Annual Income (k$)", "Spending Score (1-100)"]]
 
-# Paso 4: Escalar los datos
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Paso 5: Dendrograma para determinar el número óptimo de clusters
 plt.figure(figsize=(10, 6))
 dendrogram = sch.dendrogram(sch.linkage(X_scaled, method='ward'))
 plt.title("Dendrograma: Clustering Jerárquico")
@@ -24,11 +22,9 @@ plt.ylabel("Distancia Euclidiana")
 plt.grid(True)
 plt.show()
 
-# Paso 6: Aplicar Clustering Jerárquico
 hc = AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
 df['Hierarchical_Cluster'] = hc.fit_predict(X_scaled)
 
-# Paso 7: Visualizar los clusters
 plt.figure(figsize=(8, 6))
 sns.scatterplot(x="Annual Income (k$)", y="Spending Score (1-100)",
                 hue="Hierarchical_Cluster", palette="Set2", data=df)
