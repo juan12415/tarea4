@@ -1,25 +1,25 @@
-# Paso 1: Importar librerías necesarias
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
-# Paso 2: Cargar el dataset
+
 df = pd.read_csv('Mall_Customers.csv')  # Asegúrate de que el archivo esté en tu directorio
 
-# Paso 3: Seleccionar las columnas relevantes
+
 X = df[["Annual Income (k$)", "Spending Score (1-100)"]]
 
-# Paso 4: Escalar los datos
+
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
-# Paso 5: Aplicar K-means
+
 kmeans = KMeans(n_clusters=5, random_state=42)
 df['KMeans_Cluster'] = kmeans.fit_predict(X_scaled)
 
-# Paso 6: Visualizar los clusters
+
 plt.figure(figsize=(8, 6))
 sns.scatterplot(x="Annual Income (k$)", y="Spending Score (1-100)",
                 hue="KMeans_Cluster", palette="Set1", data=df)
